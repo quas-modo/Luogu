@@ -1,0 +1,1 @@
+aux_source_directory(/prefix_sum_difference_discretization)
