@@ -49,7 +49,7 @@ long long discrete(long long a){
 }
 
 int main() {
-  //freopen("./p1955_2.in","r",stdin);
+  freopen("./p1955_2.in","r",stdin);
   int t;
   cin >> t;
   while (t--) {

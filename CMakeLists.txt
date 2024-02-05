@@ -1,1 +1,1 @@
-aux_source_directory(/prefix_sum_difference_discretization)
+aux_source_directory(/alg2-1)
