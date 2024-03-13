@@ -28,17 +28,7 @@ void dijkstra(int u){
     priority_queue<pii> q;
     q.push(pii(- d[u], u));
     while(!q.empty()){
-        pii p = q.top();
-        int v = p.second;
-        q.pop();
-//        if(visited[v]) {
-//            if(p.first == (-1) * d[v]){
-//                ans[v] += 1;
-//                ans[v] = (ans[v]) % 100003;
-//            }
-//            continue;
-//        }
-//        visited[v] = 1;
+        int v = q.top().second; q.pop();
         ans[v] += 1;
         ans[v] = (ans[v]) % 100003;
         for(int i = head[v]; i; i = e[i].nxt){
@@ -52,14 +42,13 @@ void dijkstra(int u){
 }
 
 int main() {
-    //freopen("./p1144_2.in", "r", stdin);
+    //freopen("./p1144_1.in", "r", stdin);
     tot = 0;
     memset(head, 0, sizeof(head));
     memset(e, 0, sizeof(e));
     memset(visited, 0, sizeof(visited));
     memset(ans, 0, sizeof(ans));
-    memset(d, 0x3f, sizeof(d));
-    d[1] = 0;
+    memset(d, 0x3f, sizeof(d)); d[1] = 0;
     int n, m;
     scanf("%d %d", &n, &m);
     for (int i = 1; i <= m; i++) {
@@ -69,11 +58,13 @@ int main() {
             if(x == 1) d[1] += 1;
         }else{
             addEdge(x, y, 1);
+            addEdge(y, x, 1);
         }
     }
 
     dijkstra(1);
     ans[1] = d[1];
+    if(!ans[1]) ans[1] = 1;
 
     for(int i = 1; i <= n; i++){
         printf("%d\n", ans[i]);
