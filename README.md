@@ -13,6 +13,11 @@ long long sum = 0ll;
 #define MOD 998244353
 ```
 3. pow的自己实现方式
+4. stack-入栈和出栈写在一起
+```cpp
+instack[x] = true, s[++top] = x;
+y = s[top--], instack[y] = false;
+```
 
 
 # 图
