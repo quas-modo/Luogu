@@ -8,16 +8,16 @@
 using namespace std;
 int n, m;
 int head[N], tot;
-struct Edge{
+struct Edge {
     int to, nxt;
-}e[M];
+} e[M];
 void addEdge(int from, int to) {
     e[++tot].to = to;
     e[tot].nxt = head[from];
     head[from] = tot;
 }
 
-int dfn[N], low[N], cnt, top, s[N], nscc, bel[N];
+int dfn[N], low[N], cnt, top, s[N], nscc, bel[N], ntarjan;
 bool instack[N];
 vector<int> scc[N];
 void tarjan(int x) {
@@ -35,17 +35,15 @@ void tarjan(int x) {
     if (dfn[x] == low[x]) {
         nscc++;
         int y;
-        do{
+        do {
             y = s[top--], instack[y] = false;
             bel[y] = nscc;
             scc[nscc].push_back(y);
-        }while(x != y);
+        } while (x != y);
     }
 }
 
-
-
-int main(){
+int main() {
     scanf("%d %d", &n, &m);
     for (int i = 0; i < m; i++) {
         int a, b;
@@ -53,22 +51,45 @@ int main(){
         addEdge(a, b);
     }
     for (int i = 1; i <= n; i++) {
-        if (!dfn[i]) tarjan(i);
+        if (!dfn[i]) {
+            ntarjan++, tarjan(i);
+        }
     }
+
+    int ans = 0;
 
 
     // 查看建图的结果
+//  for (int i = 1; i <= nscc; i++) {
+//    for (int j: scc[i]) {
+//      printf("%d ", j);
+//    }
+//    printf("\n");
+//  }
+
+    int target = 0;
     for (int i = 1; i <= nscc; i++) {
+        bool flag = true;
         for (int j : scc[i]) {
-            printf("%d ", j);
+            for (int edge = head[j]; edge; edge = e[edge].nxt) {
+                int v = e[edge].to;
+                if (bel[v] != i) {
+                    flag = false;
+                    break;
+                }
+            }
         }
-        printf("\n");
+        if (flag) {
+            target++;
+
+            ans = scc[i].size();
+        }
     }
 
-    // 构建DAG
 
+    if (target > 1) ans = 0;
 
-
+    printf("%d\n", ans);
 
 
     return 0;
